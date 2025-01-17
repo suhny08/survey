@@ -152,6 +152,7 @@
         <div class="form-group">
             <label for="surveyDescription">설문 설명</label>
             <textarea id="surveyDescription" class="form-control" placeholder="설문에 대한 설명을 입력하세요"></textarea>
+            <p>질문 - 타입3,4,5 선택 시 분기 처리 가능</p>
         </div>
 
         <div id="questionsList"></div>
@@ -171,7 +172,9 @@
         class SurveyCreator {
             constructor() {
                 this.questions = [];
-                this.questionTypes = ['단답형', '장문형', '객관식', '체크박스', '드롭다운'];
+                // this.questionTypes = ['타입1', '타입2', '타입3', '타입4', '타입5'];
+                this.questionTypes = ['타입1', '타입2', '타입3', '타입4', '타입5'];
+                // this.questionTypes = ['타입3(단수)', '타입3(복수/무순위)', '타입3(복수/순위)', '주관식', '5점척도형'];
             }
 
             addQuestion() {
@@ -209,7 +212,7 @@
 
                 questionsList.appendChild(questionDiv);
                 this.questions.push({
-                    type: '단답형',
+                    type: '타입1',
                     options: [],
                     logicJumps: []
                 });
@@ -218,9 +221,9 @@
             handleQuestionTypeChange(selectElement) {
                 const optionsContainer = selectElement.parentElement.nextElementSibling;
                 const type = selectElement.value;
-                optionsContainer.style.display = ['객관식', '체크박스', '드롭다운'].includes(type) ? 'block' : 'none';
+                optionsContainer.style.display = ['타입3', '타입4', '타입5'].includes(type) ? 'block' : 'none';
                 
-                if (['객관식', '체크박스', '드롭다운'].includes(type)) {
+                if (['타입3', '타입4', '타입5'].includes(type)) {
                     this.updateLogicRules(optionsContainer);
                 }
             }
@@ -349,7 +352,7 @@
 
             renderQuestionInput(question, questionIndex) {
                 switch(question.type) {
-                    case '객관식':
+                    case '타입3':
                         return question.options.map((option, index) => `
                             <div class="option-item">
                                 <input type="radio" 
@@ -359,7 +362,7 @@
                                 <label>${option}</label>
                             </div>
                         `).join('');
-                    case '장문형':
+                    case '타입2':
                         return `<textarea class="form-control" ${question.required ? 'required' : ''}></textarea>`;
                     default:
                         return `<input type="text" class="form-control" ${question.required ? 'required' : ''}>`;
