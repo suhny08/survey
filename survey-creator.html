@@ -14,7 +14,7 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            background-color: #f5f5f5;
+            background-color: #f9f9f9;
             padding: 20px;
         }
 
@@ -24,11 +24,23 @@
             background: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .survey-header {
+        h1, h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .step {
             margin-bottom: 20px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #555;
         }
 
         .form-group {
@@ -37,16 +49,40 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
         }
 
         .form-control {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
-            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
         }
 
         .question-card {
@@ -64,29 +100,6 @@
             margin-bottom: 10px;
         }
 
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background: #007bff;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
         .options-container {
             margin-top: 10px;
             padding: 10px;
@@ -99,9 +112,6 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            padding: 8px;
-            background: #f5f5f5;
-            border-radius: 4px;
         }
 
         .option-item input {
@@ -109,19 +119,8 @@
             margin-right: 10px;
         }
 
-        .logic-rules {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f0f8ff;
-            border-radius: 4px;
-        }
-
-        .logic-rule-item {
-            background: white;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        .logic-container {
+            margin-top: 10px;
         }
 
         .preview-section {
@@ -129,6 +128,11 @@
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            background: #f0f8ff;
+        }
+
+        .preview-question {
+            margin-bottom: 20px;
         }
 
         .navigation-buttons {
@@ -140,31 +144,37 @@
 </head>
 <body>
     <div class="container">
-        <div class="survey-header">
-            <h1>설문조사 만들기</h1>
+        <h1>설문조사 만들기</h1>
+
+        <!-- Step 1: Survey Information -->
+        <div class="step">
+            <h2 class="step-title">1단계: 설문 정보 입력</h2>
+            <div class="form-group">
+                <label for="surveyTitle">설문 제목</label>
+                <input type="text" id="surveyTitle" class="form-control" placeholder="설문 제목을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="surveyDescription">설문 설명</label>
+                <textarea id="surveyDescription" class="form-control" placeholder="설문에 대한 설명을 입력하세요"></textarea>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="surveyTitle">설문 제목</label>
-            <input type="text" id="surveyTitle" class="form-control" placeholder="설문 제목을 입력하세요">
+        <!-- Step 2: Add Questions -->
+        <div class="step">
+            <h2 class="step-title">2단계: 질문 추가</h2>
+            <div id="questionsList"></div>
+            <button onclick="surveyCreator.addQuestion()" class="btn btn-primary" style="margin-top: 10px;">질문 추가</button>
         </div>
 
-        <div class="form-group">
-            <label for="surveyDescription">설문 설명</label>
-            <textarea id="surveyDescription" class="form-control" placeholder="설문에 대한 설명을 입력하세요"></textarea>
-            <p>질문 - 타입3,4,5 선택 시 분기 처리 가능</p>
+        <!-- Step 3: Preview and Publish -->
+        <div class="step">
+            <!-- <h2 class="step-title">3단계: 미리보기 및 발행</h2> -->
+            <!-- <button onclick="surveyCreator.previewSurvey()" class="btn btn-secondary" style="margin-right: 10px;">미리보기</button> -->
+            <!-- <button onclick="surveyCreator.saveSurvey('publish')" class="btn btn-primary">발행하기</button> -->
+            <button class="btn btn-primary">저장하기</button>
         </div>
 
-        <div id="questionsList"></div>
-
-        <button onclick="surveyCreator.addQuestion()" class="btn btn-primary" style="margin: 20px 0;">질문 추가</button>
-
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <!-- <button onclick="surveyCreator.saveSurvey('temp')" class="btn btn-secondary">임시 저장</button>
-            <button onclick="surveyCreator.previewSurvey()" class="btn btn-secondary">미리보기</button> -->
-            <button onclick="surveyCreator.saveSurvey('publish')" class="btn btn-primary">발행하기</button>
-        </div>
-
+        <!-- Preview Section -->
         <div id="previewSection" class="preview-section" style="display: none;"></div>
     </div>
 
@@ -172,9 +182,7 @@
         class SurveyCreator {
             constructor() {
                 this.questions = [];
-                // this.questionTypes = ['타입1', '타입2', '타입3', '타입4', '타입5'];
-                this.questionTypes = ['타입1', '타입2', '타입3', '타입4', '타입5'];
-                // this.questionTypes = ['타입3(단수)', '타입3(복수/무순위)', '타입3(복수/순위)', '주관식', '5점척도형'];
+                this.questionTypes = ['선택', '객관식', '주관식', '5점 척도'];
             }
 
             addQuestion() {
@@ -191,182 +199,65 @@
                         <input type="text" class="form-control question-text" placeholder="질문을 입력하세요">
                     </div>
                     <div class="form-group">
-                        <select class="form-control question-type" onchange="surveyCreator.handleQuestionTypeChange(this)">
+                        <select class="form-control question-type" onchange="surveyCreator.handleQuestionTypeChange(this, ${index})">
                             ${this.questionTypes.map(type => `<option value="${type}">${type}</option>`).join('')}
                         </select>
                     </div>
-                    <div class="options-container" style="display: none;">
-                        <button class="btn btn-secondary" onclick="surveyCreator.addOption(this.parentElement)">옵션 추가</button>
-                        <div class="options-list"></div>
-                        <div class="logic-rules">
-                            <h4>분기 설정</h4>
-                            <div class="logic-rules-list"></div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" class="required-question"> 필수 답변
-                        </label>
+                    <div class="options-container" id="options-container-${index}" style="display: none;">
+                        <button class="btn btn-secondary" onclick="surveyCreator.addOption(${index})">보기 추가</button>
+                        <div class="options-list" id="options-list-${index}"></div>
                     </div>
                 `;
 
                 questionsList.appendChild(questionDiv);
-                this.questions.push({
-                    type: '타입1',
-                    options: [],
-                    logicJumps: []
-                });
+                this.questions.push({ type: '객관식', options: [] });
             }
 
-            handleQuestionTypeChange(selectElement) {
-                const optionsContainer = selectElement.parentElement.nextElementSibling;
-                const type = selectElement.value;
-                optionsContainer.style.display = ['타입3', '타입4', '타입5'].includes(type) ? 'block' : 'none';
-                
-                if (['타입3', '타입4', '타입5'].includes(type)) {
-                    this.updateLogicRules(optionsContainer);
+            handleQuestionTypeChange(selectElement, index) {
+                const optionsContainer = document.getElementById(`options-container-${index}`);
+                if (selectElement.value === '객관식') {
+                    optionsContainer.style.display = 'block';
+                } else {
+                    optionsContainer.style.display = 'none';
                 }
             }
 
-            addOption(optionsContainer) {
-                const optionsList = optionsContainer.querySelector('.options-list');
+            addOption(questionIndex) {
+                const optionsList = document.getElementById(`options-list-${questionIndex}`);
+                const optionIndex = this.questions[questionIndex].options.length;
+
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'option-item';
                 optionDiv.innerHTML = `
-                    <input type="text" class="form-control" placeholder="옵션 텍스트" onchange="surveyCreator.updateLogicRules(this.closest('.options-container'))">
-                    <button class="btn btn-danger" onclick="this.parentElement.remove(); surveyCreator.updateLogicRules(this.closest('.options-container'))">삭제</button>
+                    <input type="text" class="form-control" placeholder="보기 입력">
+                    <select class="form-control logic-jump" data-option-index="${optionIndex}">
+                        <option value="next">다음 질문으로</option>
+                        ${this.questions.map((_, idx) => `<option value="${idx + 1}">질문 ${idx + 1}로 이동</option>`).join('')}
+                        <option value="end">설문 종료</option>
+                    </select>
+                    <button class="btn btn-danger" onclick="this.parentElement.remove();">삭제</button>
                 `;
+
                 optionsList.appendChild(optionDiv);
-                this.updateLogicRules(optionsContainer);
-            }
-
-            updateLogicRules(optionsContainer) {
-                const optionInputs = optionsContainer.querySelectorAll('.option-item input[type="text"]');
-                const logicRulesList = optionsContainer.querySelector('.logic-rules-list');
-                logicRulesList.innerHTML = '';
-
-                optionInputs.forEach((input, index) => {
-                    const ruleItem = document.createElement('div');
-                    ruleItem.className = 'logic-rule-item';
-                    ruleItem.innerHTML = `
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <span style="min-width: 150px;">${input.value || `옵션 ${index + 1}`} 선택 시</span>
-                            <select class="form-control logic-jump" data-option-index="${index}">
-                                <option value="next">다음 질문으로</option>
-                                ${this.questions.map((_, qIndex) => 
-                                    `<option value="${qIndex + 1}">질문 ${qIndex + 1}로 이동</option>`
-                                ).join('')}
-                                <option value="end">설문 종료</option>
-                            </select>
-                        </div>
-                    `;
-                    logicRulesList.appendChild(ruleItem);
-                });
-            }
-
-            deleteQuestion(index) {
-                const questionsList = document.getElementById('questionsList');
-                questionsList.children[index].remove();
-                this.questions.splice(index, 1);
-                
-                // 질문 번호 업데이트
-                Array.from(questionsList.children).forEach((card, idx) => {
-                    card.querySelector('h3').textContent = `질문 ${idx + 1}`;
-                    card.querySelector('.btn-danger').setAttribute('onclick', `surveyCreator.deleteQuestion(${idx})`);
-                });
+                this.questions[questionIndex].options.push({ text: '', logic: 'next' });
             }
 
             previewSurvey() {
                 const previewSection = document.getElementById('previewSection');
                 previewSection.style.display = 'block';
-                let currentQuestionIndex = 0;
-
                 const questions = Array.from(document.querySelectorAll('.question-card')).map(card => ({
                     text: card.querySelector('.question-text').value,
                     type: card.querySelector('.question-type').value,
-                    required: card.querySelector('.required-question').checked,
-                    options: Array.from(card.querySelectorAll('.option-item input[type="text"]')).map(input => input.value),
-                    logicJumps: Array.from(card.querySelectorAll('.logic-jump')).map(select => ({
-                        optionIndex: parseInt(select.dataset.optionIndex),
-                        jumpTo: select.value
-                    }))
+                    options: Array.from(card.querySelectorAll('.option-item input')).map(input => input.value)
                 }));
 
-                const renderCurrentQuestion = () => {
-                    const question = questions[currentQuestionIndex];
-                    previewSection.innerHTML = `
-                        <h2>미리보기 (질문 ${currentQuestionIndex + 1}/${questions.length})</h2>
-                        <div class="preview-question">
-                            <p>${question.text} ${question.required ? '*' : ''}</p>
-                            ${this.renderQuestionInput(question, currentQuestionIndex)}
-                        </div>
-                        <div class="navigation-buttons">
-                            ${currentQuestionIndex > 0 ? 
-                                `<button class="btn btn-secondary" onclick="surveyCreator.previewPrevQuestion()">이전</button>` : 
-                                '<div></div>'
-                            }
-                            <button class="btn btn-primary" onclick="surveyCreator.previewNextQuestion(${currentQuestionIndex})">다음</button>
-                        </div>
-                    `;
-                };
-
-                this.renderCurrentQuestion = renderCurrentQuestion;
-                this.currentQuestionIndex = currentQuestionIndex;
-                this.previewQuestions = questions;
-                renderCurrentQuestion();
-            }
-
-            previewPrevQuestion() {
-                this.currentQuestionIndex--;
-                this.renderCurrentQuestion();
-            }
-
-            previewNextQuestion(index) {
-                const question = this.previewQuestions[index];
-                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-                
-                if (selectedOption) {
-                    const optionIndex = parseInt(selectedOption.dataset.optionIndex);
-                    const logicJump = question.logicJumps.find(jump => jump.optionIndex === optionIndex);
-                    
-                    if (logicJump && logicJump.jumpTo !== 'next') {
-                        if (logicJump.jumpTo === 'end') {
-                            alert('설문이 종료되었습니다.');
-                            return;
-                        }
-                        this.currentQuestionIndex = parseInt(logicJump.jumpTo) - 1;
-                    } else {
-                        this.currentQuestionIndex++;
-                    }
-                } else {
-                    this.currentQuestionIndex++;
-                }
-
-                if (this.currentQuestionIndex >= this.previewQuestions.length) {
-                    alert('설문이 종료되었습니다.');
-                    return;
-                }
-
-                this.renderCurrentQuestion();
-            }
-
-            renderQuestionInput(question, questionIndex) {
-                switch(question.type) {
-                    case '타입3':
-                        return question.options.map((option, index) => `
-                            <div class="option-item">
-                                <input type="radio" 
-                                       name="question${questionIndex}" 
-                                       data-option-index="${index}"
-                                       ${question.required ? 'required' : ''}>
-                                <label>${option}</label>
-                            </div>
-                        `).join('');
-                    case '타입2':
-                        return `<textarea class="form-control" ${question.required ? 'required' : ''}></textarea>`;
-                    default:
-                        return `<input type="text" class="form-control" ${question.required ? 'required' : ''}>`;
-                }
+                previewSection.innerHTML = questions.map((q, i) => `
+                    <div class="preview-question">
+                        <h3>질문 ${i + 1}: ${q.text}</h3>
+                        <p>유형: ${q.type}</p>
+                        ${q.type === '객관식' ? '<ul>' + q.options.map(opt => `<li>${opt}</li>`).join('') + '</ul>' : ''}
+                    </div>
+                `).join('');
             }
 
             saveSurvey(type) {
@@ -376,21 +267,16 @@
                     questions: Array.from(document.querySelectorAll('.question-card')).map(card => ({
                         text: card.querySelector('.question-text').value,
                         type: card.querySelector('.question-type').value,
-                        required: card.querySelector('.required-question').checked,
-                        options: Array.from(card.querySelectorAll('.option-item input[type="text"]')).map(input => input.value),
-                        logicJumps: Array.from(card.querySelectorAll('.logic-jump')).map(select => ({
-                            optionIndex: parseInt(select.dataset.optionIndex),
-                            jumpTo: select.value
-                        }))
+                        options: Array.from(card.querySelectorAll('.option-item input')).map(input => input.value),
+                        logic: Array.from(card.querySelectorAll('.logic-jump')).map(select => select.value)
                     }))
                 };
 
                 console.log('저장된 설문 데이터:', surveyData);
-                alert(type === 'temp' ? '임시저장되었습니다.' : '발행 준비가 완료되었습니다.');
+                alert(type === 'publish' ? '설문이 발행되었습니다.' : '임시 저장되었습니다.');
             }
         }
 
-        // 전역 surveyCreator 인스턴스 생성
         const surveyCreator = new SurveyCreator();
     </script>
 </body>
