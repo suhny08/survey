@@ -14,17 +14,36 @@
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            background-color: #f5f5f5;
+            background-color: #f9f9f9;
             padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
             background: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .step {
+            margin-bottom: 20px;
+        }
+
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
         }
 
         .form-group {
@@ -45,184 +64,126 @@
             font-size: 14px;
         }
 
-        .dynamic-reference {
-            background: #f8f8f8;
-            padding: 20px;
-            border-radius: 4px;
-            margin-top: 10px;
-            border: 1px solid #e0e0e0;
-        }
-
         .btn {
-            padding: 8px 16px;
+            display: inline-block;
+            padding: 10px 16px;
             border: none;
             border-radius: 4px;
-            cursor: pointer;
-            background: #007bff;
+            background-color: #28a745;
             color: white;
-            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
         }
 
-        .preview {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f0f8ff;
-            border-radius: 4px;
-        }
-
-        .template-help {
-            background: #fff3cd;
-            border: 1px solid #ffeeba;
-            padding: 10px 15px;
-            border-radius: 4px;
-            margin: 10px 0;
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
         .variable-tag {
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            border: 1px dashed #2e7d32;
-            cursor: pointer;
             display: inline-block;
-            margin: 0 4px;
-        }
-
-        .tooltip {
-            background: #333;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            position: absolute;
-            display: none;
-        }
-
-        .template-input-container {
-            position: relative;
-        }
-
-        .insert-variable-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #4CAF50;
-            color: white;
-            border: none;
+            background: #f8f9fa;
+            color: #007bff;
             padding: 4px 8px;
+            border: 1px solid #007bff;
             border-radius: 4px;
+            font-size: 14px;
             cursor: pointer;
-            font-size: 12px;
+            margin-top: 10px;
         }
 
-        .preview-case {
-            background: white;
+        .preview {
+            background-color: #f0f8ff;
             padding: 15px;
             border-radius: 4px;
-            margin-bottom: 10px;
-            border: 1px solid #e0e0e0;
-        }
-
-        .preview-case strong {
-            color: #2196F3;
-        }
-
-        .variable-highlight {
-            background-color: #4CAF50;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
+            border: 1px solid #ddd;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>질문 생성</h2>
+        <h1>질문 생성</h1>
         
-        <div class="form-group">
-            <label>질문 번호</label>
-            <input type="number" class="form-control" value="15" readonly>
-        </div>
-
-        <div class="form-group">
-            <label>질문 유형</label>
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">1</span> 질문 유형 선택
+            </div>
             <select class="form-control" id="questionType">
                 <option value="dynamic">이전 응답 참조 질문</option>
                 <option value="normal">일반 질문</option>
             </select>
         </div>
 
-        <div class="dynamic-reference">
-            <div class="form-group">
-                <label>참조할 이전 질문</label>
-                <select class="form-control" id="referenceQuestion">
-                    <option value="14">14번 질문: 선호하는 음료를 선택해주세요</option>
-                </select>
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">2</span> 참조할 이전 질문 선택
             </div>
+            <select class="form-control" id="referenceQuestion">
+                <option value="14">14번 질문: 선호하는 음료를 선택해주세요</option>
+            </select>
+        </div>
 
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">3</span> 질문 템플릿 작성
+            </div>
             <div class="form-group">
-                <label>질문 템플릿 작성</label>
-                <!-- <div class="template-help">
-                    <p>💡 이전 답변을 참조하려면 <span class="variable-tag" onclick="insertVariable()">[이전 답변]</span> 를 사용하세요.</p>
-                    <p style="font-size: 13px; color: #666; margin-top: 5px;">예시: "[이전 답변]을(를) 선택하신 이유는 무엇인가요?"</p>
-                </div> -->
-                <div class="template-input-container">
-                    <input type="text" class="form-control" id="questionTemplate" 
-                           value="[이전 답변]을(를) 선택하신 이유는 무엇인가요?">
-                    <button class="insert-variable-btn" onclick="insertVariable()">변수 삽입</button>
-                </div>
+                <label>질문 템플릿</label>
+                <input type="text" class="form-control" id="questionTemplate" 
+                       placeholder="[이전 답변]을(를) 선택한 이유는 무엇인가요?">
+                <div class="variable-tag" onclick="insertVariable()">[이전 답변]</div>
+                <small>💡 "[이전 답변]"을 클릭하여 템플릿에 추가하세요.</small>
             </div>
         </div>
 
-        <div class="form-group">
-            <label>미리보기</label>
-            <div class="preview">
-                <div class="preview-case">
-                    <strong>14번 응답이 "커피"인 경우:</strong><br>
-                    커피를 선택하신 이유는 무엇인가요?
-                </div>
-                <div class="preview-case">
-                    <strong>14번 응답이 "차"인 경우:</strong><br>
-                    차를 선택하신 이유는 무엇인가요?
-                </div>
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">4</span> 미리보기
+            </div>
+            <div class="preview" id="preview">
+                <p>미리보기가 여기에 표시됩니다.</p>
             </div>
         </div>
 
-        <button class="btn">저장</button>
+        <button class="btn" id="saveBtn" disabled>저장</button>
     </div>
 
     <script>
+        const questionTemplateInput = document.getElementById('questionTemplate');
+        const preview = document.getElementById('preview');
+        const saveBtn = document.getElementById('saveBtn');
+
         function insertVariable() {
-            const input = document.getElementById('questionTemplate');
-            const cursorPos = input.selectionStart;
-            const currentValue = input.value;
+            const cursorPos = questionTemplateInput.selectionStart;
+            const currentValue = questionTemplateInput.value;
             const newValue = 
                 currentValue.substring(0, cursorPos) + 
                 '[이전 답변]' + 
                 currentValue.substring(cursorPos);
-            
-            input.value = newValue;
+
+            questionTemplateInput.value = newValue;
             updatePreview();
         }
 
         function updatePreview() {
-            const template = document.getElementById('questionTemplate').value;
+            const template = questionTemplateInput.value;
+            if (template.trim() === "") {
+                preview.innerHTML = "<p>미리보기가 여기에 표시됩니다.</p>";
+                saveBtn.disabled = true;
+                return;
+            }
+
             const sampleAnswers = ['커피', '차'];
             const previewHtml = sampleAnswers.map(answer => `
-                <div class="preview-case">
-                    <strong>14번 응답이 "${answer}"인 경우:</strong><br>
-                    ${template.replace('[이전 답변]', answer)}
-                </div>
+                <p><strong>14번 응답이 "${answer}"인 경우:</strong><br>
+                ${template.split('[이전 답변]').join(answer)}</p>
             `).join('');
-            
-            document.querySelector('.preview').innerHTML = previewHtml;
+            preview.innerHTML = previewHtml;
+            saveBtn.disabled = false;
         }
 
-        document.getElementById('questionTemplate').addEventListener('input', updatePreview);
+        questionTemplateInput.addEventListener('input', updatePreview);
     </script>
 </body>
 </html>
